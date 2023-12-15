@@ -1,0 +1,1 @@
+export const BOT_REPORT = 'BOT_REPORT'
