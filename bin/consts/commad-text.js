@@ -6,13 +6,11 @@ export const HELP = `
 ${STATUS} - получить отчет по вашему коду
 `
 
-export const MODER = 'Получили запрос, ждем ответа администратора. После пришлем вам код и ссылку.'
+export const MODER = 'Получили запрос, ждем одобрения администратора. После пришлем код и ссылку'
 
-export const getStatusText = ({count, activeCount, inactiveCount, notActiveCount, todayOnline, weekOnline, monOnline, todayNew, weekNew, monNew, maleCount, femaleCount, todayFrom, weekFrom, monFrom}) => `
-*Пользователей* _${count}_
+export const getStatusText = ({code, count, activeCount, todayOnline, weekOnline, monOnline, todayNew, weekNew, monNew, maleCount, femaleCount}) => `
+*Пользователей по коду ${code}* _${count}_
 *Активных пользователей* _${activeCount}_
-{bot-inactive: true} _${inactiveCount}_
-{is-active: false} _${notActiveCount}_
 
 *Онлайн*
 Сегодня - _${todayOnline}_
@@ -26,13 +24,4 @@ export const getStatusText = ({count, activeCount, inactiveCount, notActiveCount
 
 Мужской пол - _${maleCount}_
 Женский пол - _${femaleCount}_
-
-*Откуда сегодня*
-${todayFrom}
-
-*Откуда за 7 дней*
-${weekFrom}
-
-*Откуда за 30 дней*
-${monFrom}
 `

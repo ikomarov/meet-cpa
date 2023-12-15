@@ -10,6 +10,12 @@ const Cpa = {
     default: false
   },
 
+  code: {
+    type: String,
+    unique: true,
+    required: true
+  },
+
   created_at: {
     type: Date,
     default: Date.now,

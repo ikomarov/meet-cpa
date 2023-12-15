@@ -15,7 +15,7 @@ const Schema = dbconnect.mongoose.Schema
 export default {
   Config: dbconnect.mongoose.model('Config', new Schema(Config)),
   Moderators: dbconnect.mongoose.model('Moderators', new Schema(Moderators)),
-  Cpa: dbconnect.mongoose.model('Moderators', new Schema(Cpa)),
+  Cpa: dbconnect.mongoose.model('Cpa', new Schema(Cpa)),
   Reports: dbconnect.mongoose.model('Reports', new Schema(Reports)),
   Match: dbconnect.mongoose.model('Match', new Schema(Match)),
   Likes: dbconnect.mongoose.model('Likes', new Schema(Likes)),

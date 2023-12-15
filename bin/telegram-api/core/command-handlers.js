@@ -1,6 +1,7 @@
 import {HELP, MODER} from '../../consts/commad-text.js'
 import {
-  HELP_COMMAND, START_COMMAND, STATUS,
+  BYCODE,
+  HELP_COMMAND, R_ACCESS, START_COMMAND, STATUS,
 } from '../../consts/command.js'
 import {CHAT_ID} from '../../consts/env.js'
 import {getMainReport} from '../clients/get-main-report.js'
@@ -9,24 +10,35 @@ import bot from './instance.js'
 
 export const commandHandlers = {
   [START_COMMAND]: async (msg, chatId, moderator) => {
-    if (moderator) return;
+    if (chatId === CHAT_ID) return
+    if (moderator) return
 
     const opts = {
       reply_markup: {
         inline_keyboard: [
-          [{ text: 'Дать доступ', callback_data: `request_access/${chatId}` }]
+          [{ text: 'Дать доступ', callback_data: `${R_ACCESS}/${chatId}` }]
         ]
       }
     }
 
-    await bot.sendMessage(CHAT_ID, `Запрос Access на модерацию - ${chatId}`, opts)
+    await bot.sendMessage(CHAT_ID, `Запрос Access на получение ссылки - ${chatId}`, opts)
 
     await getInfo(msg, MODER)
   },
-  [HELP_COMMAND]: async (msg) => await getInfo(msg, HELP),
+  [HELP_COMMAND]: async (msg, chatId, moderator) => {
+    if (!moderator) return
+
+    await getInfo(msg, HELP)
+  },
   [STATUS]: async (msg, chatId, moderator) => {
+    if (chatId === CHAT_ID) return
     if (!moderator) return
 
     await getMainReport(chatId)
+  },
+  [BYCODE]: async (msg, chatId, moderator, code) => {
+    if (String(chatId) !== CHAT_ID) return
+
+    await getMainReport(chatId, code)
   },
 }
