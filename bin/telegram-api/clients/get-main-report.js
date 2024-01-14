@@ -64,6 +64,26 @@ export async function getMainReport(chatId, codeAdmin = '') {
       gender: 'F'
     })
 
+    const aggregateFromStats = async (sinceDate) => {
+      const stats = await models.Profiles.aggregate([
+        {
+          $match: {
+            referral_id: { $exists: true, $ne: '' },
+            created_at: { $gte: sinceDate }
+          }
+        },
+        { $group: { _id: '$country_code', count: { $sum: 1 } } },
+        { $sort: { count: -1 } } // Добавление этапа сортировки по убыванию
+      ])
+
+      return stats.map(stat => `${stat._id}: ${stat.count}`).join('\n')
+    }
+
+
+    const todayFrom = await aggregateFromStats(today)
+    const weekFrom = await aggregateFromStats(weekAgo)
+    const monFrom = await aggregateFromStats(monthAgo)
+
     const text = getStatusText({
       code,
       count,
@@ -75,7 +95,10 @@ export async function getMainReport(chatId, codeAdmin = '') {
       weekNew,
       monNew,
       maleCount,
-      femaleCount
+      femaleCount,
+      todayFrom,
+      weekFrom,
+      monFrom
     })
 
     await bot.sendMessage(chatId, text, REMOVE)
