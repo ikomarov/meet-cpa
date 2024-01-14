@@ -1,7 +1,7 @@
 {
   "name": "meet-cpa",
   "shorName": "cpa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "bin/index.js",
   "bin": "./dist/index.js",
   "type": "module",
