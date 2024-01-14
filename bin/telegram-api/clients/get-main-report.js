@@ -68,7 +68,7 @@ export async function getMainReport(chatId, codeAdmin = '') {
       const stats = await models.Profiles.aggregate([
         {
           $match: {
-            referral_id: { $exists: true, $ne: '' },
+            referral_id: code,
             created_at: { $gte: sinceDate }
           }
         },
